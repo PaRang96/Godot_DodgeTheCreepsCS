@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqo5q08jskl7j"]
+
+[ext_resource type="Script" path="res://main.cs" id="1_21pjw"]
+[ext_resource type="PackedScene" uid="uid://c2vwhtx44x2w0" path="res://Player.tscn" id="2_edhpn"]
+[ext_resource type="PackedScene" uid="uid://dj2xt73a4d66b" path="res://enemy.tscn" id="2_uggg5"]
+[ext_resource type="PackedScene" uid="uid://di27klorbq2bh" path="res://ui.tscn" id="4_ietrp"]
+
+[sub_resource type="Curve2D" id="Curve2D_ikgcy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -2, 3, 0, 0, 0, 0, 480, 2, 0, 0, 0, 0, 480, 723, 0, 0, 0, 0, -5, 723, 0, 0, 0, 0, -2, 3)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_21pjw")
+mobScene = ExtResource("2_uggg5")
+
+[node name="MobTimer" type="Timer" parent="."]
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+
+[node name="StartLocation" type="Marker2D" parent="."]
+
+[node name="EnemyPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ikgcy")
+
+[node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemyPath"]
+position = Vector2(-2, 3)
+rotation = -0.00207469
+
+[node name="Player" parent="." instance=ExtResource("2_edhpn")]
+
+[node name="HUD" parent="." instance=ExtResource("4_ietrp")]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+
+[connection signal="timeout" from="MobTimer" to="." method="onMobTimerTimeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="onScoreTimerTimeout"]
+[connection signal="timeout" from="StartTimer" to="." method="onStartTimerTimeout"]
+[connection signal="Hit" from="Player" to="." method="GameOver"]
+[connection signal="StartGame" from="HUD" to="." method="NewGame"]

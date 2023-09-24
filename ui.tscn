@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://di27klorbq2bh"]
+
+[ext_resource type="FontFile" uid="uid://ln3twyvjerri" path="res://fonts/Xolonium-Regular.ttf" id="1_45jdy"]
+[ext_resource type="Script" path="res://ui.cs" id="1_khnl7"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_khnl7")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_45jdy")
+theme_override_font_sizes/font_size = 10
+
+[node name="Message" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_45jdy")
+theme_override_font_sizes/font_size = 10
+
+[node name="StartButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MessageTimer" type="Timer" parent="."]
+
+[connection signal="pressed" from="StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="OnMessageTimerTimeout"]
